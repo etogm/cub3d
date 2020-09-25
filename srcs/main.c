@@ -6,7 +6,7 @@
 /*   By: ljanette <ljanette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 19:02:10 by ljanette          #+#    #+#             */
-/*   Updated: 2020/09/25 15:04:16 by ljanette         ###   ########.fr       */
+/*   Updated: 2020/09/25 16:20:21 by ljanette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int				retry(t_vars *vars)
 {
 	mlx_clear_window(vars->mlx, vars->win);
 	ray_casting(*vars, *vars->player->pos, vars->player->angle);
-	mlx_put_image_to_window(vars->mlx, vars->win, vars->img.img_ptr, 0, 0);
+	//mlx_put_image_to_window(vars->mlx, vars->win, vars->img.img_ptr, 0, 0);
 }
 
 int				main(int argc, char **argv)

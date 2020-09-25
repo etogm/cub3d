@@ -6,7 +6,7 @@
 /*   By: ljanette <ljanette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/01 21:55:57 by ljanette          #+#    #+#             */
-/*   Updated: 2020/09/25 14:47:40 by ljanette         ###   ########.fr       */
+/*   Updated: 2020/09/25 16:28:39 by ljanette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <stdio.h>
 
 # define	PI			3.14159265359
-# define	SQUARE_SIZE	15
+# define	SQUARE_SIZE	30
 # define	WIDTH		640
 
 # define	FOV			PI / 3
@@ -99,9 +99,7 @@ void			brezenhem(t_vars vars, int x0, int y0, int x1, int y1, int color);
 
 void			ray_casting(t_vars vars, t_point pos, double angle);
 
-
 void			map_draw(t_vars vars, char **text_map);
-
 
 t_player		*player_init(void);
 void			player_contoller(int keycode, t_vars *vars);
