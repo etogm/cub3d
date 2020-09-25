@@ -6,7 +6,7 @@
 /*   By: ljanette <ljanette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 16:50:10 by ljanette          #+#    #+#             */
-/*   Updated: 2020/09/25 16:27:57 by ljanette         ###   ########.fr       */
+/*   Updated: 2020/09/25 16:49:38 by ljanette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void			find_wall(t_vars vars, double cosa, double sina, int ray)
 	{
 		p2.x = vars.player->pos->x + depth * cosa;
 		p2.y = vars.player->pos->y + depth * sina;
-		if (vars.settings->text_map[p2.y / SQUARE_SIZE][p2.x / SQUARE_SIZE] == '1')
+		if (vars.settings->text_map[(int)p2.y / SQUARE_SIZE][(int)p2.x / SQUARE_SIZE] == '1')
 		{
 			proj_height = PROJ_COEFF / (depth * cos(-HALF_FOV));
 			p3.x = ray * SCALE;

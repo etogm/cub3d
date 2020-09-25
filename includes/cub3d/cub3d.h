@@ -6,7 +6,7 @@
 /*   By: ljanette <ljanette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/01 21:55:57 by ljanette          #+#    #+#             */
-/*   Updated: 2020/09/25 16:28:39 by ljanette         ###   ########.fr       */
+/*   Updated: 2020/09/25 16:54:11 by ljanette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@
 
 # define	FOV			PI / 3
 # define	HALF_FOV	FOV / 2
-# define	NUM_RAYS	480
-# define	MAX_DEPTH	1600
+# define	NUM_RAYS	WIDTH
+# define	MAX_DEPTH	5000
 # define	DELTA_ANGLE	FOV / NUM_RAYS
 # define	DIST		NUM_RAYS / (2 * tan(HALF_FOV))
-# define	PROJ_COEFF	4 * DIST * SQUARE_SIZE
+# define	PROJ_COEFF	DIST * SQUARE_SIZE
 # define	SCALE		WIDTH / NUM_RAYS
 
 # define	KEY_W		13//119
@@ -53,8 +53,8 @@ typedef	struct	s_img
 
 typedef	struct	s_point
 {
-	int			x;
-	int			y;
+	double		x;
+	double		y;
 }				t_point;
 
 typedef struct	s_settings
