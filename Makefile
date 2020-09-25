@@ -6,7 +6,7 @@
 #    By: ljanette <ljanette@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/01 17:51:30 by ljanette          #+#    #+#              #
-#    Updated: 2020/08/06 17:04:14 by ljanette         ###   ########.fr        #
+#    Updated: 2020/09/19 12:16:24 by ljanette         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,7 +43,7 @@ $(LIBFT):
 	@$(MAKE) -C includes/libft clean
 
 $(NAME): $(OBJ_DIR) $(LIBFT) $(OBJ)
-	@$(CC) -o $(NAME) $(OBJ) $(addprefix -L$(INC_DIR)/, $(INC)) includes/libft/libft.a -lmlx -L/usr/include/../lib -lXext -lX11 -lm -lbsd -g
+	@$(CC) -Lmlx -lmlx -framework OpenGL -framework AppKit -o $(NAME) $(OBJ) $(addprefix -L$(INC_DIR)/, $(INC)) includes/libft/libft.a
 	@echo "\n$(BOLD)MAKE:$(NC)\t'$(NAME)' created"
 
 $(OBJ_DIR):
@@ -51,7 +51,7 @@ $(OBJ_DIR):
 	@mkdir -p obj/parser
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(INC_FILES)
-	@gcc -I/usr/include -O3 $(addprefix -I$(INC_DIR)/, $(INC)) -c $< -o $@ -g
+	@$(CC) -Imlx $(addprefix -I$(INC_DIR)/, $(INC)) -c $< -o $@
 	@echo "$(BOLD)MAKE:$(NC)\t'$@' created"
 
 clean:

@@ -6,14 +6,31 @@
 /*   By: ljanette <ljanette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 16:50:10 by ljanette          #+#    #+#             */
-/*   Updated: 2020/09/18 17:13:57 by ljanette         ###   ########.fr       */
+/*   Updated: 2020/09/25 15:23:29 by ljanette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 #include "mlx.h"
 
-void			ray_casting(t_vars vars, t_point pos, double angle, int color)
+void		draw_line(t_vars vars, t_point p1, t_point p2)
+{
+	int		x;
+	int		y;
+	int		color;
+
+	y = p1.y;
+	while (y < p2.y)
+	{
+		x = p1.x;
+		color = *(vars.img.img_data + 4 * p1.y * vars.img.width + 4 * p1.x);
+		mlx_pixel_put(vars.mlx, vars.win, x, y, color);
+		y++;
+	}
+}
+
+
+void			ray_casting(t_vars vars, t_point pos, double angle)
 {
 	double		cur_angle;
 	int			ray;
@@ -31,8 +48,6 @@ void			ray_casting(t_vars vars, t_point pos, double angle, int color)
 		{
 			p2.x = pos.x + depth * cosa;
 			p2.y = pos.y + depth * sina;
-			//brezenhem(vars, pos.x, pos.y, p2.x, p2.y, color);
-			depth++;
 			if (vars.settings->text_map[p2.y / SQUARE_SIZE][p2.x / SQUARE_SIZE] == '1')
 			{
 				t_point p3;
@@ -44,9 +59,10 @@ void			ray_casting(t_vars vars, t_point pos, double angle, int color)
 				p3.y = (vars.settings->r_y / 2) - (proj_height / 2);
 				p4.x = SCALE;
 				p4.y = proj_height;
-				draw_square(vars, p3, p4, color);
+				draw_line(vars, p3, p4);
 				break;
 			}
+			depth++;
 		}
 		ray++;
 		cur_angle += DELTA_ANGLE;
