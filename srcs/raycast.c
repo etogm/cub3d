@@ -6,14 +6,14 @@
 /*   By: ljanette <ljanette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 16:50:10 by ljanette          #+#    #+#             */
-/*   Updated: 2020/09/25 16:49:38 by ljanette         ###   ########.fr       */
+/*   Updated: 2020/09/25 17:47:59 by ljanette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 #include "mlx.h"
 
-void			draw_line(t_vars vars, t_point p1, t_point p2)
+void			draw_line(t_vars vars, t_point p1, t_point p2, int proj_height)
 {
 	int			x;
 	int			y;
@@ -23,12 +23,10 @@ void			draw_line(t_vars vars, t_point p1, t_point p2)
 	while (y < p2.y)
 	{
 		x = p1.x;
-		//color = *(vars.img.img_data + 4 * y * vars.img.width + 4 * x);
-		color = 0xFFFFFF;
-		if (p2.y < p2.x)
-			mlx_pixel_put(vars.mlx, vars.win, x, y, color);
-		else
-			mlx_pixel_put(vars.mlx, vars.win, x, y, color / 2);
+		color = *(vars.img.img_data + 4 * y / proj_height * vars.img.width + 4 * x / proj_height);
+		//color = *(vars.img.img_data + (y * vars.img.size_line) / proj_height + (x * (vars.img.bpp / 8)) / proj_height);
+		//color = 0xFFFFFF;
+		mlx_pixel_put(vars.mlx, vars.win, x, y, color);
 		y++;
 	}
 }
@@ -53,7 +51,7 @@ void			find_wall(t_vars vars, double cosa, double sina, int ray)
 			p3.y = (vars.settings->r_y / 2) - (proj_height / 2);
 			p4.x = SCALE;
 			p4.y = proj_height;
-			draw_line(vars, p3, p4);
+			draw_line(vars, p3, p4, proj_height);
 			break;
 		}
 		depth++;

@@ -6,7 +6,7 @@
 /*   By: ljanette <ljanette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 19:02:10 by ljanette          #+#    #+#             */
-/*   Updated: 2020/09/25 16:20:21 by ljanette         ###   ########.fr       */
+/*   Updated: 2020/09/25 17:45:21 by ljanette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void			game_launch(t_vars *vars, char *file)
 
 	vars->settings = settings_parser(file);
 	vars->mlx = mlx_init();
-	vars->win = mlx_new_window(vars->mlx, vars->settings->r_x, vars->settings->r_y, "cub3d");
+	vars->win = mlx_new_window(vars->mlx, vars->settings->r_x, vars->settings->r_y, "Cub3d");
 	vars->player = player_init();
 }
 
