@@ -6,7 +6,7 @@
 /*   By: ljanette <ljanette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/01 21:55:57 by ljanette          #+#    #+#             */
-/*   Updated: 2020/09/25 16:54:11 by ljanette         ###   ########.fr       */
+/*   Updated: 2020/09/26 20:15:21 by ljanette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,10 @@
 # define	DIST		NUM_RAYS / (2 * tan(HALF_FOV))
 # define	PROJ_COEFF	DIST * SQUARE_SIZE
 # define	SCALE		WIDTH / NUM_RAYS
+
+# define	TEX_WIDTH	256
+# define	TEX_HEIGHT	256
+# define	TEX_SCALE	TEX_WIDTH / SQUARE_SIZE
 
 # define	KEY_W		13//119
 # define	KEY_A		0//97
