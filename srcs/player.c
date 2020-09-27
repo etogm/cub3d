@@ -6,23 +6,37 @@
 /*   By: ljanette <ljanette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 19:09:50 by ljanette          #+#    #+#             */
-/*   Updated: 2020/09/25 15:51:53 by ljanette         ###   ########.fr       */
+/*   Updated: 2020/09/27 17:03:27 by ljanette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-t_player		*player_init(void)
+t_player		*player_init(t_vars vars)
 {
 	t_player	*player;
-	t_point		*pos;
+	int			i;
+	int			j;
 
 	player = (t_player*)malloc(sizeof(t_player));
-	pos = (t_point*)malloc(sizeof(t_point));
-	pos->x = 50;
-	pos->y = 50;
-	player->pos = pos;
-	player->angle = 0;
+	player->pos = (t_point*)malloc(sizeof(t_point));
+	i = 0;
+	while (vars.settings->text_map[i])
+	{
+		j = 0;
+		while (vars.settings->text_map[i][j])
+		{
+			if (vars.settings->text_map[i][j] == 'N' || vars.settings->text_map[i][j] == 'W'
+			|| vars.settings->text_map[i][j] == 'E' || vars.settings->text_map[i][j] == 'S')
+			{
+				player->pos->x = j * SQUARE_SIZE;
+				player->pos->y = i * SQUARE_SIZE;
+				player->angle = PI;
+			}
+			j++;
+		}
+		i++;
+	}
 	player->speed = 2;
 	return (player);
 }

@@ -6,7 +6,7 @@
 /*   By: ljanette <ljanette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 19:02:10 by ljanette          #+#    #+#             */
-/*   Updated: 2020/09/27 12:37:01 by ljanette         ###   ########.fr       */
+/*   Updated: 2020/09/27 16:53:52 by ljanette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int 			game_launch(t_vars *vars, char *file)
 	}
 	vars->mlx = mlx_init();
 	vars->win = mlx_new_window(vars->mlx, vars->settings->r_x, vars->settings->r_y, "Cub3d");
-	vars->player = player_init();
+	vars->player = player_init(*vars);
 	return (1);
 }
 
@@ -59,11 +59,7 @@ int				retry(t_vars *vars)
 int				main(int argc, char **argv)
 {
 	t_vars		vars;
-	t_point		p2;
-	int			**world_map;
-	
-	p2.x = 100;
-	p2.y = 100;
+
 	if (!(game_launch(&vars, argv[1])))
 		return (0);
 	vars.img.img_ptr = mlx_xpm_file_to_image(vars.mlx, "texture.xpm", &vars.img.width, &vars.img.height);

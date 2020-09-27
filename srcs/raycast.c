@@ -6,7 +6,7 @@
 /*   By: ljanette <ljanette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 16:50:10 by ljanette          #+#    #+#             */
-/*   Updated: 2020/09/27 12:10:51 by ljanette         ###   ########.fr       */
+/*   Updated: 2020/09/27 17:04:24 by ljanette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ void			draw_line(t_vars vars, t_point p1, t_point p2, unsigned int c)
 
 void			find_wall(t_vars vars, double cosa, double sina, double ray, double cur_angle)
 {
-	int			depth;
-	int			proj_height;
+	float		depth;
+	float		proj_height;
 	t_point		p2;
 	t_point		p3;
 	t_point		p4;
@@ -81,7 +81,6 @@ void			find_wall(t_vars vars, double cosa, double sina, double ray, double cur_a
 		p2.y = vars.player->pos->y + depth * sina;
 		if (vars.settings->text_map[(int)p2.y / SQUARE_SIZE][(int)p2.x / SQUARE_SIZE] == '1')
 		{
-			offset = depth % SQUARE_SIZE;
 			proj_height = PROJ_COEFF / (depth * cos(vars.player->angle - cur_angle));
 			p3.x = ray;
 			p3.y = (vars.settings->r_y / 2) - (proj_height / 2);

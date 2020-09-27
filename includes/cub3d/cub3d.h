@@ -6,7 +6,7 @@
 /*   By: ljanette <ljanette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/01 21:55:57 by ljanette          #+#    #+#             */
-/*   Updated: 2020/09/27 13:10:59 by ljanette         ###   ########.fr       */
+/*   Updated: 2020/09/27 17:04:53 by ljanette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ typedef	struct	s_img
 
 typedef	struct	s_point
 {
-	double		x;
-	double		y;
+	float		x;
+	float		y;
 }				t_point;
 
 typedef struct	s_settings
@@ -88,7 +88,7 @@ typedef	struct	s_raycast
 typedef	struct	s_player
 {
 	t_point		*pos;
-	double		angle;
+	float		angle;
 	int			speed;
 }				t_player;
 
@@ -116,7 +116,7 @@ void			ray_casting(t_vars vars, t_point pos, double angle);
 
 void			map_draw(t_vars vars, char **text_map);
 
-t_player		*player_init(void);
+t_player		*player_init(t_vars vars);
 void			player_contoller(int keycode, t_vars *vars);
 
 #endif
