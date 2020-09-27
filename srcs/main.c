@@ -6,12 +6,13 @@
 /*   By: ljanette <ljanette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 19:02:10 by ljanette          #+#    #+#             */
-/*   Updated: 2020/09/26 18:59:26 by ljanette         ###   ########.fr       */
+/*   Updated: 2020/09/27 12:37:01 by ljanette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 #include "mlx.h"
+#include "libft.h"
 /*
 int				img_init(t_vars *vars)
 {
@@ -19,15 +20,20 @@ int				img_init(t_vars *vars)
 	vars->img->img_data = (int *)mlx_get_data_addr(vars->img->img_ptr, &vars->img->bpp, &vars->img->size_line, &vars->img->endian);
 }*/
 
-void			game_launch(t_vars *vars, char *file)
+int 			game_launch(t_vars *vars, char *file)
 {
 	t_player	player;
 	t_point		pos;
 
-	vars->settings = settings_parser(file);
+	if (!(vars->settings = settings_parser(file)))
+	{
+		ft_putstr_fd("Error\n", 1);
+		return (0);
+	}
 	vars->mlx = mlx_init();
 	vars->win = mlx_new_window(vars->mlx, vars->settings->r_x, vars->settings->r_y, "Cub3d");
 	vars->player = player_init();
+	return (1);
 }
 
 int				game_controller(int keycode, t_vars *vars)
@@ -39,6 +45,7 @@ int				game_controller(int keycode, t_vars *vars)
 		exit(0);
 	}
 	printf("keycode: %d\n", keycode);
+	return (1);
 }
 
 int				retry(t_vars *vars)
@@ -46,6 +53,7 @@ int				retry(t_vars *vars)
 	mlx_clear_window(vars->mlx, vars->win);
 	ray_casting(*vars, *vars->player->pos, vars->player->angle);
 	//mlx_put_image_to_window(vars->mlx, vars->win, vars->img.img_ptr, 0, 0);
+	return (1);
 }
 
 int				main(int argc, char **argv)
@@ -56,11 +64,12 @@ int				main(int argc, char **argv)
 	
 	p2.x = 100;
 	p2.y = 100;
-	game_launch(&vars, argv[1]);
+	if (!(game_launch(&vars, argv[1])))
+		return (0);
 	vars.img.img_ptr = mlx_xpm_file_to_image(vars.mlx, "texture.xpm", &vars.img.width, &vars.img.height);
 	vars.img.img_data = (int *)mlx_get_data_addr(vars.img.img_ptr, &vars.img.bpp, &vars.img.size_line, &vars.img.endian);
 	mlx_key_hook(vars.win, game_controller, &vars);
 	mlx_loop_hook(vars.mlx, retry, &vars);
 	mlx_loop(vars.mlx);
-	return 0;
+	return (0);
 }

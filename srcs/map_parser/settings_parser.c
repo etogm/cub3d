@@ -6,7 +6,7 @@
 /*   By: ljanette <ljanette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/01 18:47:07 by ljanette          #+#    #+#             */
-/*   Updated: 2020/09/25 15:54:41 by ljanette         ###   ########.fr       */
+/*   Updated: 2020/09/27 12:33:15 by ljanette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,8 @@ t_settings		*settings_parser(char *file)
 		if (i == 8)
 			break;
 	}
-	settings->text_map = map_parser(fd);
+	if (!(settings->text_map = map_parser(fd)))
+		return (NULL);
 	free(line);
 	close(fd);
 	return (settings);

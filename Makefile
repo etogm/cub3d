@@ -6,7 +6,7 @@
 #    By: ljanette <ljanette@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/01 17:51:30 by ljanette          #+#    #+#              #
-#    Updated: 2020/09/25 15:56:28 by ljanette         ###   ########.fr        #
+#    Updated: 2020/09/27 13:11:37 by ljanette         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,8 +22,9 @@ OBJ_DIR = obj
 INC_FILES	= includes/cub3d/cub3d.h includes/cub3d/get_next_line.h includes/cub3d/libft.h includes/cub3d/mlx.h
 SRC_FILES	= \
 			main.c 					cub3d_utils.c 	player.c	raycast.c\
-			parser/map_parser.c		parser/settings_parser.c\
-			parser/get_next_line.c	parser/get_next_line_utils.c
+			map_parser/map_parser.c		map_parser/settings_parser.c\
+			map_parser/get_next_line.c	map_parser/get_next_line_utils.c\
+			map_parser/map_checker.c
 
 INC = mlx_linux cub3d libft
 SRC = $(addprefix $(SRC_DIR)/, $(SRC_FILES))
@@ -48,7 +49,7 @@ $(NAME): $(OBJ_DIR) $(LIBFT) $(OBJ)
 
 $(OBJ_DIR):
 	@mkdir -p obj
-	@mkdir -p obj/parser
+	@mkdir -p obj/map_parser
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(INC_FILES)
 	@$(CC) -Imlx $(addprefix -I$(INC_DIR)/, $(INC)) -c $< -o $@

@@ -6,7 +6,7 @@
 /*   By: ljanette <ljanette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/01 21:55:57 by ljanette          #+#    #+#             */
-/*   Updated: 2020/09/26 20:15:21 by ljanette         ###   ########.fr       */
+/*   Updated: 2020/09/27 13:10:59 by ljanette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 # define	PI			3.14159265359
 # define	SQUARE_SIZE	30
-# define	WIDTH		640
+# define	WIDTH		1080
 
 # define	FOV			PI / 3
 # define	HALF_FOV	FOV / 2
@@ -75,6 +75,16 @@ typedef struct	s_settings
 	char		**text_map;
 }				t_settings;
 
+typedef	struct	s_raycast
+{
+	int			num_rays;
+	double		delta_angle;
+	double		dist;
+	double		proj_coeff;
+	int			scale;
+}				t_raycast;
+
+
 typedef	struct	s_player
 {
 	t_point		*pos;
@@ -94,6 +104,7 @@ typedef struct	s_vars
 t_settings		*settings_parser(char *file);
 char			**map_parser(int fd);
 int				**map_get(int fd);
+int				map_checker(char **map);
 
 int				abs(int x);
 int				max(int a, int b);
