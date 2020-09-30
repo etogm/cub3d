@@ -6,7 +6,7 @@
 /*   By: ljanette <ljanette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 16:50:10 by ljanette          #+#    #+#             */
-/*   Updated: 2020/09/30 17:03:08 by ljanette         ###   ########.fr       */
+/*   Updated: 2020/09/30 19:07:26 by ljanette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,7 @@ int				get_texture_color (t_img img, t_point pos)
     int			g;
     int			b;
 
-    offset = pos.y * img.size_line
-    + pos.x * (img.bpp / 8);
+    offset = pos.y * img.size_line + pos.x * (img.bpp / 8);
     a = img.img_data[offset + 0];
     r = img.img_data[offset + 1];
     g = img.img_data[offset + 2];
@@ -47,6 +46,44 @@ void			draw_line(t_vars vars, t_point p1, int column_h, unsigned int c)
 {
 	while (p1.y < column_h)
 		mlx_pixel_put(vars.mlx, vars.win, p1.x, p1.y++, c);
+}
+
+int				wall_side(char **text_map, t_point pos)
+{
+	int			x;
+	int			y;
+
+	x = pos.x / SQUARE_SIZE;
+	y = pos.y / SQUARE_SIZE;
+	printf("%d %f\n", y, pos.y);
+	if (y * SQUARE_SIZE + SQUARE_SIZE - 1 == (int)pos.y) //north
+		return (0xebffc0);
+	else if (y * SQUARE_SIZE == (int)pos.y) //south
+		return (0xb3e0ff);
+	else if (x * SQUARE_SIZE == (int)pos.x) //east
+		return (0x663399);
+	else if (x * SQUARE_SIZE + SQUARE_SIZE == (int)pos.x + 1) //west
+		return (0xf4e9e8);
+	return (0);
+}
+
+int				wall_tex(t_vars vars, char **text_map, t_point pos)
+{
+	int			x;
+	int			y;
+
+	x = pos.x / SQUARE_SIZE;
+	y = pos.y / SQUARE_SIZE;
+	printf("%d %f\n", y, pos.y);
+	if (y * SQUARE_SIZE + SQUARE_SIZE - 1 == (int)pos.y) //north
+		return (0xff7792);
+	else if (y * SQUARE_SIZE == (int)pos.y) //south
+		return (0xb3e0ff);
+	else if (x * SQUARE_SIZE + SQUARE_SIZE == (int)pos.x + 1) //west
+		return (0xf4e9e8);
+	else if (x * SQUARE_SIZE == (int)pos.x) //east
+		return (0x663399);
+	return (0);
 }
 
 void			find_wall(t_vars vars, float cosa, float sina, int ray, float cur_angle)
@@ -62,13 +99,14 @@ void			find_wall(t_vars vars, float cosa, float sina, int ray, float cur_angle)
 	{
 		p2.x = vars.player->pos->x + depth * cosa;
 		p2.y = vars.player->pos->y + depth * sina;
-		if (vars.settings->text_map[(int)p2.y / SQUARE_SIZE][(int)p2.x / SQUARE_SIZE] == '1')
+		if (vars.settings->text_map[(int)(p2.y / SQUARE_SIZE)][(int)(p2.x / SQUARE_SIZE)] == '1')
 		{
+			//printf("x: %f\ty: %f\n", p2.x, p2.y);
 			proj_height = MAX(PROJ_COEFF / (depth * cos(vars.player->angle - cur_angle)), 0.00001);
 			//proj_height = vars.settings->r_y / depth;
-			p2.x = ray;
-			p2.y = (vars.settings->r_y / 2) - (proj_height / 2);
-			draw_line(vars, p2, proj_height, 0xFFFFFF);
+			p3.x = ray;
+			p3.y = (vars.settings->r_y / 2) - (proj_height / 2);
+			draw_line(vars, p3, proj_height, wall_tex(vars, vars.settings->text_map, p2));
 			break;
 		}
 		depth += 0.1;

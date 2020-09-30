@@ -6,7 +6,7 @@
 /*   By: ljanette <ljanette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/29 20:02:26 by ljanette          #+#    #+#             */
-/*   Updated: 2020/09/29 20:25:28 by ljanette         ###   ########.fr       */
+/*   Updated: 2020/09/30 17:18:20 by ljanette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void        draw_back(t_vars vars)
 	int     j;
 
 	i = 0;
-	while (i < vars.settings->r_y / 2)
+	while (i < vars.settings->r_y / 3)
 	{
 		j = 0;
 		while (j < vars.settings->r_x)

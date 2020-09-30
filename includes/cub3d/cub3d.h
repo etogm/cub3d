@@ -6,7 +6,7 @@
 /*   By: ljanette <ljanette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/01 21:55:57 by ljanette          #+#    #+#             */
-/*   Updated: 2020/09/30 17:06:38 by ljanette         ###   ########.fr       */
+/*   Updated: 2020/09/30 17:17:44 by ljanette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,15 @@
 
 # define	PI			3.14159265359
 # define	SQUARE_SIZE	100
-# define	WIDTH		1080
+# define	WIDTH		640
 
 # define	FOV			PI / 3
 # define	HALF_FOV	FOV / 2
 # define	NUM_RAYS	WIDTH
 # define	MAX_DEPTH	800
 # define	DELTA_ANGLE	FOV / NUM_RAYS
-# define	DIST		NUM_RAYS / (2 * tan(HALF_FOV))
-# define	PROJ_COEFF	4 * DIST * SQUARE_SIZE
+# define	DIST		NUM_RAYS / tan(HALF_FOV)
+# define	PROJ_COEFF	DIST * SQUARE_SIZE
 # define	SCALE		WIDTH / NUM_RAYS
 
 # define	TEX_WIDTH	256
