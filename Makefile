@@ -6,7 +6,7 @@
 #    By: ljanette <ljanette@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/01 17:51:30 by ljanette          #+#    #+#              #
-#    Updated: 2020/09/27 13:11:37 by ljanette         ###   ########.fr        #
+#    Updated: 2020/09/29 20:09:04 by ljanette         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ OBJ_DIR = obj
 #SRC_FILES	= *.c map/*.c
 INC_FILES	= includes/cub3d/cub3d.h includes/cub3d/get_next_line.h includes/cub3d/libft.h includes/cub3d/mlx.h
 SRC_FILES	= \
-			main.c 					cub3d_utils.c 	player.c	raycast.c\
+			main.c 					cub3d_utils.c 	player.c	raycast.c draw.c\
 			map_parser/map_parser.c		map_parser/settings_parser.c\
 			map_parser/get_next_line.c	map_parser/get_next_line_utils.c\
 			map_parser/map_checker.c

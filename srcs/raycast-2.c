@@ -6,7 +6,7 @@
 /*   By: ljanette <ljanette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/26 20:31:25 by ljanette          #+#    #+#             */
-/*   Updated: 2020/09/27 11:09:54 by ljanette         ###   ########.fr       */
+/*   Updated: 2020/09/30 14:58:33 by ljanette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void			find_wall(t_vars vars, double cosa, double sina, int ray, t_point m)
 	t_point		p4;
 	int			offset;
 
-	if (cos >= 0)
+	if (cosa >= 0)
 	{
 		x = (int)m.x + SQUARE_SIZE;
 		dx = 1;
@@ -93,9 +93,8 @@ void			find_wall(t_vars vars, double cosa, double sina, int ray, t_point m)
 	while (i < vars.settings->r_x)
 	{
 		depth_v = (x - vars.player->pos->x) / cosa;
-		y = vars.player->pos->x + depth_v * sina;
-		printf("%d %d\n", y, x + dx);
-		if (vars.settings->text_map[y][x + dx] == '1')
+		y = vars.player->pos->y + depth_v * sina;
+		if (vars.settings->text_map[(y / SQUARE_SIZE) * SQUARE_SIZE][((x + dx)/ SQUARE_SIZE) * SQUARE_SIZE] == '1')
 			break;
 		x += dx * SQUARE_SIZE;
 	}
@@ -116,9 +115,9 @@ void			find_wall(t_vars vars, double cosa, double sina, int ray, t_point m)
 	{
 		depth_h = (x - vars.player->pos->y) / sina;
 		x = vars.player->pos->x + depth_h * cosa;
-		if (vars.settings->text_map[y + dy][x] == '1')
+		if (vars.settings->text_map[((y + dy)/ SQUARE_SIZE) * SQUARE_SIZE][(x / SQUARE_SIZE) * SQUARE_SIZE] == '1')
 			break;
-		y += dy + SQUARE_SIZE;
+		y += dy * SQUARE_SIZE;
 	}
 	depth = (depth_v < depth_h) ? depth_v : depth_h;
 	//proj_height = PROJ_COEFF / (depth * cos(vars.player->angle - cur_angle));

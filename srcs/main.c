@@ -6,7 +6,7 @@
 /*   By: ljanette <ljanette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 19:02:10 by ljanette          #+#    #+#             */
-/*   Updated: 2020/09/27 16:53:52 by ljanette         ###   ########.fr       */
+/*   Updated: 2020/09/30 17:08:48 by ljanette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ int				game_controller(int keycode, t_vars *vars)
 int				retry(t_vars *vars)
 {
 	mlx_clear_window(vars->mlx, vars->win);
+	//draw_back(*vars);
 	ray_casting(*vars, *vars->player->pos, vars->player->angle);
-	//mlx_put_image_to_window(vars->mlx, vars->win, vars->img.img_ptr, 0, 0);
 	return (1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ljanette <ljanette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/01 21:55:57 by ljanette          #+#    #+#             */
-/*   Updated: 2020/09/27 17:04:53 by ljanette         ###   ########.fr       */
+/*   Updated: 2020/09/30 17:06:38 by ljanette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,16 @@
 # include <stdio.h>
 
 # define	PI			3.14159265359
-# define	SQUARE_SIZE	30
+# define	SQUARE_SIZE	100
 # define	WIDTH		1080
 
 # define	FOV			PI / 3
 # define	HALF_FOV	FOV / 2
 # define	NUM_RAYS	WIDTH
-# define	MAX_DEPTH	5000
+# define	MAX_DEPTH	800
 # define	DELTA_ANGLE	FOV / NUM_RAYS
 # define	DIST		NUM_RAYS / (2 * tan(HALF_FOV))
-# define	PROJ_COEFF	DIST * SQUARE_SIZE
+# define	PROJ_COEFF	4 * DIST * SQUARE_SIZE
 # define	SCALE		WIDTH / NUM_RAYS
 
 # define	TEX_WIDTH	256
@@ -43,6 +43,8 @@
 # define	KEY_ESC		53//65307
 # define	KEY_LEFT	123//65361
 # define	KEY_RIGHT	124//65363
+
+# define	MAX(a, b)	((a < b) ? b : a)
 
 typedef	struct	s_img
 {
@@ -109,9 +111,7 @@ int				map_checker(char **map);
 int				abs(int x);
 int				max(int a, int b);
 
-void			draw_square(t_vars vars, t_point p1, t_point p2, int color);
-void			brezenhem(t_vars vars, int x0, int y0, int x1, int y1, int color);
-
+void			draw_back(t_vars vars);
 void			ray_casting(t_vars vars, t_point pos, double angle);
 
 void			map_draw(t_vars vars, char **text_map);

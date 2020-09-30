@@ -6,7 +6,7 @@
 /*   By: ljanette <ljanette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 19:09:50 by ljanette          #+#    #+#             */
-/*   Updated: 2020/09/27 17:03:27 by ljanette         ###   ########.fr       */
+/*   Updated: 2020/09/30 17:07:12 by ljanette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,13 @@ t_player		*player_init(t_vars vars)
 			{
 				player->pos->x = j * SQUARE_SIZE;
 				player->pos->y = i * SQUARE_SIZE;
-				player->angle = PI;
+				player->angle = 0;
 			}
 			j++;
 		}
 		i++;
 	}
-	player->speed = 2;
+	player->speed = 50;
 	return (player);
 }
 
