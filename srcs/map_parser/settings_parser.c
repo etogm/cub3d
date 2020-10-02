@@ -6,7 +6,7 @@
 /*   By: ljanette <ljanette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/01 18:47:07 by ljanette          #+#    #+#             */
-/*   Updated: 2020/09/27 12:33:15 by ljanette         ###   ########.fr       */
+/*   Updated: 2020/10/02 19:20:04 by ljanette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,36 +55,38 @@ int				color_get_rgb(char **params)
 	g = ft_atoi(params[1]);
 	b = ft_atoi(params[2]);
 	settings_params_free(params);
+	if ((r < 0 || r > 255) || (g < 0 || g > 255) || (b < 0 || b > 255))
+		return (-1);
 	return(r << 16 | g << 8 | b);
 }
 
-int				settings_set(t_settings *settings, char *line)
+int				settings_set(t_settings *s, char *line)
 {
-	char		**params;
+	char		**p;
 
-	params = ft_split(line, ' ');
-	if (!ft_strncmp(params[0], "R", ft_strlen(params[0])) && settings->r_x == -1 && settings->r_y == -1)
+	p = ft_split(line, ' ');
+	if (!ft_strncmp(p[0], "R", ft_strlen(p[0])) && s->r_x == -1 && s->r_y == -1)
 	{
-		settings->r_x = ft_atoi(params[1]);
-		settings->r_y = ft_atoi(params[2]);
+		s->r_x = ft_atoi(p[1]);
+		s->r_y = ft_atoi(p[2]);
 	}
-	else if (!ft_strncmp(params[0], "NO", ft_strlen(params[0])) && !settings->path_no)
-		settings->path_no = ft_strdup(params[1]);
-	else if (!ft_strncmp(params[0], "WE", ft_strlen(params[0])) && !settings->path_we)
-		settings->path_we = ft_strdup(params[1]);
-	else if (!ft_strncmp(params[0], "EA", ft_strlen(params[0])) && !settings->path_ea)
-		settings->path_ea = ft_strdup(params[1]);
-	else if (!ft_strncmp(params[0], "S", ft_strlen(params[0]))  && !settings->path_s)
-		settings->path_s = ft_strdup(params[1]);
-	else if (!ft_strncmp(params[0], "SO", ft_strlen(params[0])) && !settings->path_so)
-		settings->path_so = ft_strdup(params[1]);
-	else if (!ft_strncmp(params[0], "F", ft_strlen(params[0]))  && settings->clr_floor == -1)
-		settings->clr_floor = color_get_rgb(ft_split(params[1], ','));
-	else if (!ft_strncmp(params[0], "C", ft_strlen(params[0]))  && settings->clr_ceiling == -1)
-		settings->clr_ceiling = color_get_rgb(ft_split(params[1], ','));
+	else if (!ft_strncmp(p[0], "NO", ft_strlen(p[0])) && !s->path_no)
+		s->path_no = ft_strdup(p[1]);
+	else if (!ft_strncmp(p[0], "WE", ft_strlen(p[0])) && !s->path_we)
+		s->path_we = ft_strdup(p[1]);
+	else if (!ft_strncmp(p[0], "EA", ft_strlen(p[0])) && !s->path_ea)
+		s->path_ea = ft_strdup(p[1]);
+	else if (!ft_strncmp(p[0], "S", ft_strlen(p[0])) && !s->path_s)
+		s->path_s = ft_strdup(p[1]);
+	else if (!ft_strncmp(p[0], "SO", ft_strlen(p[0])) && !s->path_so)
+		s->path_so = ft_strdup(p[1]);
+	else if (!ft_strncmp(p[0], "F", ft_strlen(p[0])) && s->clr_floor == -1)
+		s->clr_floor = color_get_rgb(ft_split(p[1], ','));
+	else if (!ft_strncmp(p[0], "C", ft_strlen(p[0])) && s->clr_ceiling == -1)
+		s->clr_ceiling = color_get_rgb(ft_split(p[1], ','));
 	else
 		return (0);
-	settings_params_free(params);
+	settings_params_free(p);
 	return (1);
 }
 
@@ -107,11 +109,13 @@ t_settings		*settings_parser(char *file)
 				return (NULL);
 		free(line);
 		if (i == 8)
-			break;
+			break ;
 	}
 	if (!(settings->text_map = map_parser(fd)))
 		return (NULL);
 	free(line);
 	close(fd);
+	if (!(settings_checker(settings)))
+		return (NULL);
 	return (settings);
 }

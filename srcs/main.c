@@ -6,7 +6,7 @@
 /*   By: ljanette <ljanette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 19:02:10 by ljanette          #+#    #+#             */
-/*   Updated: 2020/09/30 18:52:22 by ljanette         ###   ########.fr       */
+/*   Updated: 2020/10/02 19:42:23 by ljanette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ int 			game_launch(t_vars *vars, char *file)
 {
 	t_player	player;
 	t_point		pos;
+	int			x;
+	int			y;
 
 	if (!(vars->settings = settings_parser(file)))
 	{
@@ -32,6 +34,12 @@ int 			game_launch(t_vars *vars, char *file)
 	}
 	vars->mlx = mlx_init();
 	vars->win = mlx_new_window(vars->mlx, vars->settings->r_x, vars->settings->r_y, "Cub3d");
+	mlx_get_screen_size(vars->mlx, &x, &y);
+	if (x < vars->settings->r_x || y < vars->settings->r_y)
+	{
+		vars->settings->r_x = x;
+		vars->settings->r_y = y;	
+	}
 	vars->player = player_init(*vars);
 	return (1);
 }
@@ -62,8 +70,6 @@ int				main(int argc, char **argv)
 
 	if (!(game_launch(&vars, argv[1])))
 		return (0);
-	vars.img.img_ptr = mlx_xpm_file_to_image(vars.mlx, "texture.xpm", &vars.img.width, &vars.img.height);
-	vars.img.img_data = (int *)mlx_get_data_addr(vars.img.img_ptr, &vars.img.bpp, &vars.img.size_line, &vars.img.endian);
 	mlx_key_hook(vars.win, game_controller, &vars);
 	mlx_loop_hook(vars.mlx, retry, &vars);
 	mlx_loop(vars.mlx);

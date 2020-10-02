@@ -6,7 +6,7 @@
 /*   By: ljanette <ljanette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 19:09:50 by ljanette          #+#    #+#             */
-/*   Updated: 2020/09/30 17:07:12 by ljanette         ###   ########.fr       */
+/*   Updated: 2020/10/02 16:03:37 by ljanette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,7 @@ t_player		*player_init(t_vars vars)
 		j = 0;
 		while (vars.settings->text_map[i][j])
 		{
-			if (vars.settings->text_map[i][j] == 'N' || vars.settings->text_map[i][j] == 'W'
-			|| vars.settings->text_map[i][j] == 'E' || vars.settings->text_map[i][j] == 'S')
+			if (is_map_side(vars.settings->text_map[i][j]))
 			{
 				player->pos->x = j * SQUARE_SIZE;
 				player->pos->y = i * SQUARE_SIZE;

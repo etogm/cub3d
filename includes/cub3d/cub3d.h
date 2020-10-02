@@ -6,7 +6,7 @@
 /*   By: ljanette <ljanette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/01 21:55:57 by ljanette          #+#    #+#             */
-/*   Updated: 2020/09/30 17:17:44 by ljanette         ###   ########.fr       */
+/*   Updated: 2020/10/02 19:21:21 by ljanette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,14 @@
 
 # define	PI			3.14159265359
 # define	SQUARE_SIZE	100
-# define	WIDTH		640
 
 # define	FOV			PI / 3
 # define	HALF_FOV	FOV / 2
-# define	NUM_RAYS	WIDTH
 # define	MAX_DEPTH	800
-# define	DELTA_ANGLE	FOV / NUM_RAYS
-# define	DIST		NUM_RAYS / tan(HALF_FOV)
-# define	PROJ_COEFF	DIST * SQUARE_SIZE
-# define	SCALE		WIDTH / NUM_RAYS
 
 # define	TEX_WIDTH	256
 # define	TEX_HEIGHT	256
-# define	TEX_SCALE	TEX_WIDTH / SQUARE_SIZE
+# define	TEX_SCALE	SQUARE_SIZE / TEX_WIDTH
 
 # define	KEY_W		13//119
 # define	KEY_A		0//97
@@ -77,16 +71,6 @@ typedef struct	s_settings
 	char		**text_map;
 }				t_settings;
 
-typedef	struct	s_raycast
-{
-	int			num_rays;
-	double		delta_angle;
-	double		dist;
-	double		proj_coeff;
-	int			scale;
-}				t_raycast;
-
-
 typedef	struct	s_player
 {
 	t_point		*pos;
@@ -100,9 +84,10 @@ typedef struct	s_vars
 	void		*win;
 	t_player	*player;
 	t_settings	*settings;
-	t_img		img;
+	t_img		*img;
 }				t_vars;
 
+int				settings_checker(t_settings *settings);
 t_settings		*settings_parser(char *file);
 char			**map_parser(int fd);
 int				**map_get(int fd);
@@ -110,8 +95,11 @@ int				map_checker(char **map);
 
 int				abs(int x);
 int				max(int a, int b);
+int				is_map_side(char c);
+int				is_map_char(char c);
 
 void			draw_back(t_vars vars);
+void			draw_line(t_vars vars, t_point p1, int column_h, int x);
 void			ray_casting(t_vars vars, t_point pos, double angle);
 
 void			map_draw(t_vars vars, char **text_map);
