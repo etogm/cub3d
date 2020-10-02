@@ -6,7 +6,7 @@
 /*   By: ljanette <ljanette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/01 18:47:07 by ljanette          #+#    #+#             */
-/*   Updated: 2020/10/02 19:20:04 by ljanette         ###   ########.fr       */
+/*   Updated: 2020/10/02 20:06:23 by ljanette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ t_settings		*settings_parser(char *file)
 		return (NULL);
 	free(line);
 	close(fd);
-	if (!(settings_checker(settings)))
-		return (NULL);
+	/*if (!(settings_checker(settings)))
+		return (NULL);*/
 	return (settings);
 }

@@ -1,11 +1,11 @@
-R 1280 920
-NO leavesop.xpm
-SO texture.xpm
-WE texture.xpm
-EA texture.xpm
+R 640 480
+NO img/texture.xpm
+SO img/texture.xpm
+WE img/texture.xpm
+EA img/texture.xpm
 S texture.xpm
-F 255,255,255
-C 255,255,255
+F 255,225,225
+C 225,225,225
 
 111111111111111111
 100000000000000001

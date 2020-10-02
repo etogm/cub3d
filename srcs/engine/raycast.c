@@ -6,7 +6,7 @@
 /*   By: ljanette <ljanette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/06 16:50:10 by ljanette          #+#    #+#             */
-/*   Updated: 2020/10/02 19:49:40 by ljanette         ###   ########.fr       */
+/*   Updated: 2020/10/02 20:34:15 by ljanette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,18 @@ int				wall_tex(t_vars vars, char **text_map, t_point pos)
 	return (0);
 }
 
+void			find_wall2(t_vars vars, t_point p3, int depth, int ray)
+{
+	float		column_h;
+	int			dist;
+
+	dist = vars.settings->r_x / tan(HALF_FOV);
+	column_h = MAX(dist * SQUARE_SIZE / depth, 0.00001);
+	p3.x = ray;
+	p3.y = (vars.settings->r_y / 2) - (column_h / 2);
+	draw_line(vars, p3, column_h, ray);
+}
+
 void			find_wall(t_vars vars, float cosa, float sina,
 							int ray)
 {
@@ -65,11 +77,7 @@ void			find_wall(t_vars vars, float cosa, float sina,
 		if (vars.settings->text_map
 		[(int)(p2.y / SQUARE_SIZE)][(int)(p2.x / SQUARE_SIZE)] == '1')
 		{
-			column_h = MAX((vars.settings->r_x / tan(HALF_FOV) * SQUARE_SIZE)
-			/ (depth), 0.00001);
-			p3.x = ray;
-			p3.y = (vars.settings->r_y / 2) - (column_h / 2);
-			draw_line(vars, p3, column_h, ray);
+			find_wall2(vars, p3, depth, ray);
 			break ;
 		}
 		depth += 0.1;
@@ -79,13 +87,15 @@ void			find_wall(t_vars vars, float cosa, float sina,
 void			ray_casting(t_vars vars, t_point pos, double angle)
 {
 	float		cur_angle;
+	float		delta_angel;
 	int			ray;
 
 	ray = 0;
+	delta_angel = FOV / vars.settings->r_x;
 	cur_angle = angle - HALF_FOV;
 	while (ray < vars.settings->r_x)
 	{
 		find_wall(vars, cos(cur_angle), sin(cur_angle), ray++);
-		cur_angle += (FOV / vars.settings->r_x);
+		cur_angle += delta_angel;
 	}
 }
