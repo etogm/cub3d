@@ -6,7 +6,7 @@
 /*   By: ljanette <ljanette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/04 19:02:10 by ljanette          #+#    #+#             */
-/*   Updated: 2020/10/02 20:37:17 by ljanette         ###   ########.fr       */
+/*   Updated: 2020/10/03 18:58:54 by ljanette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,10 @@ int				game_controller(int keycode, t_vars *vars)
 
 int				retry(t_vars *vars)
 {
-	mlx_clear_window(vars->mlx, vars->win);
 	draw_back(*vars);
 	ray_casting(*vars, *vars->player->pos, vars->player->angle);
+	//ray_cast(*vars);
+	mlx_clear_window(vars->mlx, vars->win);
 	return (1);
 }
 
@@ -70,10 +71,12 @@ int				main(int argc, char **argv)
 
 	if (!(game_launch(&vars, argv[1])))
 		return (0);
-	vars.img = (t_img*)malloc(sizeof(t_img));
+	/*vars.img = (t_img*)malloc(sizeof(t_img));
 	vars.img->img_ptr = mlx_xpm_file_to_image(vars.mlx, vars.settings->path_ea, &vars.img->width, &vars.img->height);
-	vars.img->img_data = (int*)mlx_get_data_addr(vars.img->img_ptr, &vars.img->bpp, &vars.img->size_line, &vars.img->endian);
-	mlx_key_hook(vars.win, game_controller, &vars);
+	vars.img->img_data = (int*)mlx_get_data_addr(vars.img->img_ptr, &vars.img->bpp, &vars.img->size_line, &vars.img->endian);*/
+	mlx_hook(vars.mlx, 2, 1L << 0, game_controller, &vars);
+	printf("test\n");
+	//mlx_key_hook(vars.win, game_controller, &vars);
 	mlx_loop_hook(vars.mlx, retry, &vars);
 	mlx_loop(vars.mlx);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: ljanette <ljanette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/29 20:02:26 by ljanette          #+#    #+#             */
-/*   Updated: 2020/10/02 20:33:04 by ljanette         ###   ########.fr       */
+/*   Updated: 2020/10/03 17:12:46 by ljanette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,17 +51,18 @@ void			draw_back(t_vars vars)
 		i++;
 	}
 }
-
+/*
 void			draw_line(t_vars vars, t_point p1, int column_h, int x)
 {
 	int			y;
 	t_point		hit;
 
 	y = 0;
-	hit.x = x % SQUARE_SIZE * TEX_SCALE;
+	//hit.x = x % SQUARE_SIZE * TEX_SCALE;
 	while (p1.y < column_h)
 	{
-		hit.y = (y++ * TEX_WIDTH / column_h) * TEX_SCALE;
+		//hit.y = (y++ * TEX_WIDTH / column_h) * TEX_SCALE;
 		mlx_pixel_put(vars.mlx, vars.win, p1.x, p1.y++, 0xFFD700);
 	}
 }
+*/

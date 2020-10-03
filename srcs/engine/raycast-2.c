@@ -1,146 +1,91 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   raycast.c                                          :+:      :+:    :+:   */
+/*   raycast-2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ljanette <ljanette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/26 20:31:25 by ljanette          #+#    #+#             */
-/*   Updated: 2020/09/30 14:58:33 by ljanette         ###   ########.fr       */
+/*   Updated: 2020/10/03 15:48:46 by ljanette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 #include "mlx.h"
 
-t_point			*mapping(t_point pos)
+int			verticals(t_vars vars, t_point p, t_point m, t_point d, float cos_a, float sin_a)
 {
-	t_point     *m;
+	float	depth_v;
+	int		i;
 
-	m = (t_point*)malloc(sizeof(t_point));
-	m->x = (pos.x / SQUARE_SIZE) * SQUARE_SIZE;
-	m->y = (pos.y / SQUARE_SIZE) * SQUARE_SIZE;
-	return (m);
-}
-
-int				get_texture_color (t_img img, t_point pos)
-{
-    int			offset;
-    int			a;
-    int			r;
-    int			g;
-    int			b;
-
-    offset = pos.y * img.size_line
-    + pos.x * (img.bpp / 8);
-    a = img.img_data[offset + 0];
-    r = img.img_data[offset + 1];
-    g = img.img_data[offset + 2];
-    b = img.img_data[offset + 3];
-    return (b << 24 | g << 16 | r << 8 | a);
-}
-
-void			draw_line(t_vars vars, t_point p1, t_point p2)
-{
-	int			x;
-	int			y;
-	int			color;
-	t_point		p3;
-
-	y = p1.y; 
-	while (y < p2.y)
-	{
-		x = p1.x;
-		p3.y = (vars.img.height * (y % (int)255)) / 255;
-		p3.x = x % 255;
-		//color = get_texture_color(vars.img, p3);
-		color = *(vars.img.img_data + 4 * y * vars.img.width + 4 * x);
-		//color = *(vars.img.img_data + (y * vars.img.size_line) / proj_height + (x * (vars.img.bpp / 8)) / proj_height);
-		//color = 0xFFFFFF;
-		mlx_pixel_put(vars.mlx, vars.win, x, y, color);
-		y++;
-	}
-}
-
-void			find_wall(t_vars vars, double cosa, double sina, int ray, t_point m)
-{
-	int			x;
-	int			y;
-	int			dx;
-	int			dy;
-	int			i;
-	int			depth_v;
-	int			depth_h;
-
-	int			depth;
-	int			proj_height;
-	t_point		p2;
-	t_point		p3;
-	t_point		p4;
-	int			offset;
-
-	if (cosa >= 0)
-	{
-		x = (int)m.x + SQUARE_SIZE;
-		dx = 1;
-	}
-	else
-	{
-		x = (int)m.x;
-		dx = -1;
-	}
+	p.x = cos_a >= 0 ? (m.x + TILE) : m.x;
+	d.x = cos_a >= 0 ? 1 : -1;
 	i = 0;
 	while (i < vars.settings->r_x)
 	{
-		depth_v = (x - vars.player->pos->x) / cosa;
-		y = vars.player->pos->y + depth_v * sina;
-		if (vars.settings->text_map[(y / SQUARE_SIZE) * SQUARE_SIZE][((x + dx)/ SQUARE_SIZE) * SQUARE_SIZE] == '1')
-			break;
-		x += dx * SQUARE_SIZE;
+		depth_v = (p.x - vars.player->pos->x) / cos_a;
+		p.y = vars.player->pos->y + depth_v * sin_a;
+		if (vars.settings->text_map[(int)p.y / TILE][((int)p.x + (int)d.x) / TILE] == '1')
+			break ;
+		p.x += d.x * TILE;
+		i += TILE;
 	}
-	if (sina >= 0)
-	{
-		y = (int)m.y + SQUARE_SIZE;
-		dy = 1;
-	}
-	else
-	{
-		y = (int)m.y;
-		dy = -1;
-	}
+	return (depth_v);
+}
 
-	printf("test2\n");
+int			horizontals(t_vars vars, t_point p, t_point m, t_point d, float cos_a, float sin_a)
+{
+	float	depth_h;
+	int		i;
+
+	p.y = sin_a >= 0 ? (m.y + TILE) : m.y;
+	d.y = sin_a >= 0 ? 1 : -1;
 	i = 0;
 	while (i < vars.settings->r_y)
 	{
-		depth_h = (x - vars.player->pos->y) / sina;
-		x = vars.player->pos->x + depth_h * cosa;
-		if (vars.settings->text_map[((y + dy)/ SQUARE_SIZE) * SQUARE_SIZE][(x / SQUARE_SIZE) * SQUARE_SIZE] == '1')
-			break;
-		y += dy * SQUARE_SIZE;
+		depth_h = (p.y - vars.player->pos->y) / sin_a;
+		p.x = vars.player->pos->x + depth_h * cos_a;
+		printf("%f %f\n", (floor(p.y + d.y) / TILE), floor(p.x) / TILE);
+		if (vars.settings->text_map[((int)p.y + (int)d.y) / TILE][(int)(p.x) / TILE] == '1')
+			break ;
+		p.y += d.y * TILE;
+		i += TILE;
 	}
-	depth = (depth_v < depth_h) ? depth_v : depth_h;
-	//proj_height = PROJ_COEFF / (depth * cos(vars.player->angle - cur_angle));
-	proj_height = PROJ_COEFF / depth;
-	p3.x = ray * SCALE;
-	p3.y = (vars.settings->r_y / 2) - (proj_height / 2);
-	p4.x = SCALE;
-	p4.y = proj_height;
-	draw_line(vars, p3, p4);
+	return (depth_h);
 }
 
-void			ray_casting(t_vars vars, t_point player_pos, double player_angle)
+void		ray_cast(t_vars vars)
 {
-	t_point		*m;
-	double		cur_angle;
-	int			ray;
+	t_point	m;
+	float	cur_angle;
+	int		ray;
+	t_point	p;
+	t_point d;
+	float depth_v;
+	float depth_h;
+	int 	i;
 
-	m = mapping(player_pos);
-	cur_angle = player_angle - HALF_FOV;
+	m.x = vars.player->pos->x;
+	m.y = vars.player->pos->y;
+	cur_angle = vars.player->angle - HALF_FOV;
 	ray = 0;
 	while (ray < NUM_RAYS)
 	{
-		find_wall(vars, cos(cur_angle), sin(cur_angle), ray++, *m);
+		float sin_a = sin(cur_angle);
+		float cos_a = cos(cur_angle);
+		depth_v = verticals(vars, p, m, d, cos_a, sin_a);
+		depth_h = horizontals(vars, p, m, d, cos_a, sin_a);
+
+		float depth = depth_v < depth_h ? depth_v : depth_h;
+		depth *= cos(vars.player->angle - cur_angle);
+
+		float proj_height = MIN((int)(PROJ_COEFF / depth), 2 * vars.settings->r_y);
+		t_point		p_line;
+
+		p_line.x = ray * SCALE;
+		p_line.y = (vars.settings->r_y / 2) - (int)(proj_height / 2);
+		draw_line(vars, p_line, proj_height, 1);
+		ray++;
 		cur_angle += DELTA_ANGLE;
 	}
 }

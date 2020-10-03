@@ -6,7 +6,7 @@
 /*   By: ljanette <ljanette@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/01 21:55:57 by ljanette          #+#    #+#             */
-/*   Updated: 2020/10/02 19:21:21 by ljanette         ###   ########.fr       */
+/*   Updated: 2020/10/03 18:27:51 by ljanette         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,19 @@
 # include <math.h>
 # include <stdio.h>
 
-# define	PI			3.14159265359
+# define	PI			3.14
 # define	SQUARE_SIZE	100
+# define	TILE		100
+# define	WIDTH		640
 
-# define	FOV			PI / 3
+# define	FOV			PI / 4
 # define	HALF_FOV	FOV / 2
+# define	NUM_RAYS	640
 # define	MAX_DEPTH	800
+# define	DELTA_ANGLE	FOV / NUM_RAYS
+# define	DIST		NUM_RAYS / (2 * tan(HALF_FOV))
+# define	PROJ_COEFF	DIST * TILE
+# define	SCALE		WIDTH / NUM_RAYS
 
 # define	TEX_WIDTH	256
 # define	TEX_HEIGHT	256
@@ -39,6 +46,7 @@
 # define	KEY_RIGHT	124//65363
 
 # define	MAX(a, b)	((a < b) ? b : a)
+# define	MIN(a, b)	((a < b) ? a : b)
 
 typedef	struct	s_img
 {
@@ -99,8 +107,9 @@ int				is_map_side(char c);
 int				is_map_char(char c);
 
 void			draw_back(t_vars vars);
-void			draw_line(t_vars vars, t_point p1, int column_h, int x);
+//void			draw_line(t_vars vars, t_point p1, int column_h, int x);
 void			ray_casting(t_vars vars, t_point pos, double angle);
+void			ray_cast(t_vars vars);
 
 void			map_draw(t_vars vars, char **text_map);
 
